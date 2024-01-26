@@ -37,4 +37,6 @@ public class Investment {
   private int price;
 
   private String name;
+
+  private String photo;
 }

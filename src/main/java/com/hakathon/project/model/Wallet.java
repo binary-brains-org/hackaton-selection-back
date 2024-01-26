@@ -30,6 +30,14 @@ public class Wallet {
 
   private int eMoney;
 
+  private int withdrawLimit;
+
   @OneToOne
   private User user;
+
+  public int withdraw(int toWithdraw) {
+    this.eMoney -= toWithdraw;
+    this.withdrawLimit -= toWithdraw;
+    return this.eMoney;
+  }
 }

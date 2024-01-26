@@ -44,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'
         '400':
           description: Bad request
         '404':
@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/ResponseLogin'
         '400':
           description: Bad request
         '404':
@@ -94,7 +94,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserResponse'
         '400':
           description: Bad request
         '404':
@@ -121,7 +121,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserResponse'
         '400':
           description: Bad request
         '404':
@@ -246,6 +246,13 @@ components:
           type: string
         password:
           type: string
+    ResponseLogin:
+      type: object
+      properties:
+        id:
+          type: string
+        token:
+          type: string
     Investment:
       type: object
       properties:
@@ -276,8 +283,23 @@ components:
           type: string
         label:
           type: string
+
     CreateUser:
+      allOf:
+        - $ref: '#/components/schemas/User'
       type: object
+      properties:
+        password:
+          type: string
+          example: 12345
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/User'
+      type: object
+      properties:
+        id:
+          type: string
+    User:
       properties:
         firstname:
           type: string
@@ -287,26 +309,17 @@ components:
           example: Camero
         birthdate:
           type: string
-          format: date-time
-        password:
-          type: string
-          example: 12345
+          format: date
         sex:
           type: string
           enum:
             - M
             - F
         image:
-          type: string
+            type: string
         cin:
-          type: string
-          default: null
-    User:
-      allOf:
-        - $ref: '#/components/schemas/CreateUser'
-      properties:
-        id:
-          type: string
+            type: string
+            default: null
         role:
           type: string
           enum:
