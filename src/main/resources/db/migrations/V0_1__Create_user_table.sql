@@ -26,6 +26,5 @@ create table if not exists "user" (
   password varchar,
   age integer,
   image text,
-  user_id varchar references "user"(id),
-  token varchar
+  user_id varchar references "user"(id)
 );

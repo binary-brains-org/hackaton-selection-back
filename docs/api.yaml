@@ -249,7 +249,7 @@ components:
     ResponseLogin:
       type: object
       properties:
-        id:
+        userId:
           type: string
         token:
           type: string

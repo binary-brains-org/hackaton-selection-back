@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @ToString
 @Builder
+@EqualsAndHashCode
 public class User {
   @Id
   @GeneratedValue(strategy = IDENTITY)
@@ -54,8 +56,6 @@ public class User {
   private String cin;
 
   private String photo;
-
-  private String token;
 
   @OneToMany
   private List<User> childs;
