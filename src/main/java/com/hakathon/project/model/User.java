@@ -1,13 +1,9 @@
 package com.hakathon.project.model;
 
 import com.hakathon.project.model.enums.UserEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.util.List;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,7 +51,8 @@ public class User {
 
   private String cin;
 
-  private String photo;
+  @Lob
+  private String image;
 
   @OneToMany
   private List<User> childs;
