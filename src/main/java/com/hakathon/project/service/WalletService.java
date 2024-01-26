@@ -1,5 +1,6 @@
 package com.hakathon.project.service;
 
+import com.hakathon.project.controller.exception.NotFoundException;
 import com.hakathon.project.model.Wallet;
 import com.hakathon.project.repository.WalletRepository;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,9 @@ public class WalletService {
   private final WalletRepository walletRepository;
 
   public Wallet getWalletByUserId(String userId) {
-    return walletRepository.findWalletByUserId(userId).get();
+    return walletRepository.findWalletByUserId(userId).orElseThrow(() -> {
+      throw new NotFoundException("Wallet with user id:" + userId + " not found");
+    });
   }
 
   public Wallet withdrawBalance(String userId, int toWithdraw) {
