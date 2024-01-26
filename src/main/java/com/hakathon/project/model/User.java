@@ -51,7 +51,6 @@ public class User {
 
   private String cin;
 
-  @Lob
   private String image;
 
   @OneToMany

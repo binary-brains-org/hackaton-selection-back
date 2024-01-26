@@ -10,7 +10,15 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class WalletService {
   private final WalletRepository walletRepository;
-
+  private final UserService userService;
+  public Wallet createWallet(String userId,Integer eMoney,Integer limit){
+    Wallet wallet = Wallet.builder()
+            .user(userService.getUserById(userId))
+            .eMoney(eMoney)
+            .withdrawLimit(limit)
+            .build();
+    return walletRepository.save(wallet);
+  }
   public Wallet getWalletByUserId(String userId) {
     return walletRepository.findWalletByUserId(userId).orElseThrow(() -> {
       throw new NotFoundException("Wallet with user id:" + userId + " not found");
