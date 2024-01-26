@@ -6,6 +6,7 @@ import com.hakathon.project.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @RestController
@@ -20,8 +21,22 @@ public class UserController {
     }
 
     @GetMapping("user/{user_id}")
-    public Optional<User> getUser(@PathVariable String user_id){
+    public User getUser(@PathVariable String user_id){
         return userService.getUserById(user_id);
     }
+
+    /*@PutMapping("/postImage")
+    public User postImage(@RequestBody byte[] image){
+        try {
+            String base64Data = Base64.getEncoder().encodeToString(image);
+                User user = getUser(user_id);
+                user.setImage(image);
+                userService.save(imageEntity);
+                System.out.println("Image saved successfully.");
+            } catch (Exception e) {
+                System.err.println("Error saving image: " + e.getMessage());
+            }
+
+    }*/
 
 }
