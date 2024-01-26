@@ -55,6 +55,8 @@ public class User {
 
   private String photo;
 
+  private String token;
+
   @OneToMany
   private List<User> childs;
 }
