@@ -1,0 +1,334 @@
+openapi: 3.0.3
+info:
+  version: 'latest'
+  title: VisualPayKid - API
+  description: |
+    A simple API for teaching kids/teenager about spending money
+paths:
+  /ping:
+    get:
+      tags:
+        - Health
+      summary: Health check of the server
+      description: Check if the server is up or not
+      operationId: ping
+      responses:
+        '200':
+          description: pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
+        '400':
+          description: Bad request
+        '404':
+          description: Ressource not found
+        '500':
+          description: Server error
+  /createUser:
+    put:
+      tags:
+        - User
+      summary: Create an account for kid/parent in the database
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '200':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /loginUser:
+    post:
+      tags:
+        - User
+      summary: Logging for an user
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+      responses:
+        '200':
+          description: Logged in successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /user/{user_id}:
+    get:
+      tags:
+        - User
+      summary: Get user by id
+      operationId: getUser
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /user/{user_id}/child:
+    get:
+      tags:
+        - User
+      summary: Get all child by parent id
+      operationId: getChildByParent
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User's child information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /storeMoney:
+    post:
+      tags:
+        - Transaction
+      summary: Deposit money in parent account only
+      operationId: depositMoney
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Investment'
+      responses:
+        '200':
+          description: Money stored in Parent's account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '400':
+          description: You cannot store money in other or a teen's account
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /transferMoney/{user_id}:
+    post:
+      tags:
+        - Transaction
+      summary: Transfer Money from parent account to kid account
+      operationId: transferMoney
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Investment'
+      responses:
+        '200':
+          description: Money transferred in kid's account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '400':
+          description: You cannot transfer money other than a kid's account
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /getWallet/{user_id}:
+    get:
+      tags:
+        - Transaction
+      summary: Get wallet by id
+      operationId: getWalletByUserId
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User's wallet's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /buy:
+    post:
+      tags:
+        - Transaction
+      summary: "Invest on a object"
+      operationId: buyProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Investment'
+      responses:
+        '200':
+          description: Money transferred in kid's account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Investment'
+        '400':
+          description: You cannot transfer money other than a kid's account
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    LoginUser:
+      type: object
+      properties:
+        lastname:
+          type: string
+        firstname:
+          type: string
+        password:
+          type: string
+    Investment:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        comment:
+          type: string
+        status:
+          type: string
+          enum:
+            - ENABLED
+            - DENIED
+        price:
+          type: integer
+        image:
+          type: string
+          default: null
+        category:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvestmentCategory'
+    InvestmentCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+    CreateUser:
+      type: object
+      properties:
+        firstname:
+          type: string
+          example: Rio
+        lastname:
+          type: string
+          example: Camero
+        birthdate:
+          type: string
+          format: date-time
+        password:
+          type: string
+          example: 12345
+        sex:
+          type: string
+          enum:
+            - M
+            - F
+        image:
+          type: string
+        cin:
+          type: string
+          default: null
+    User:
+      allOf:
+        - $ref: '#/components/schemas/CreateUser'
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+          enum:
+            - CHILD
+            - PARENT
+        age_category:
+          type: string
+          enum:
+            - KID
+            - TEEN
+            - ADULT
+        age:
+          type: integer
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          $ref: '#/components/schemas/User'
+        e_money:
+          type: integer
+          example: 100
+        limit:
+          type: integer
