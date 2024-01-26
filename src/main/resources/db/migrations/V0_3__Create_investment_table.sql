@@ -11,5 +11,6 @@ create table if not exists "investment"(
   id varchar primary key default uuid_generate_v4(),
   comment varchar,
   status status,
-  price integer
+  price integer,
+  image text
 );

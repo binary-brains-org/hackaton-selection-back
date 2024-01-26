@@ -24,5 +24,7 @@ create table if not exists "user" (
   sex sex,
   age_category age_category,
   password varchar,
-  age integer
+  age integer,
+  image text,
+  user_id varchar references "user"(id)
 );
