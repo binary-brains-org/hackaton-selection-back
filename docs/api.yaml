@@ -52,7 +52,7 @@ paths:
         '500':
           description: Server error
   /loginUser:
-    put:
+    post:
       tags:
         - User
       summary: Logging for an user
@@ -62,7 +62,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ''
+              $ref: '#/components/schemas/LoginUser'
       responses:
         '200':
           description: Logged in successfully
@@ -95,6 +95,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+        '404':
+          description: Resource not found
+        '500':
+          description: Server error
+  /user/{user_id}/child:
+    get:
+      tags:
+        - User
+      summary: Get all child by parent id
+      operationId: getChildByParent
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User's child information
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           description: Bad request
         '404':
@@ -210,6 +237,15 @@ paths:
 
 components:
   schemas:
+    LoginUser:
+      type: object
+      properties:
+        lastname:
+          type: string
+        firstname:
+          type: string
+        password:
+          type: string
     Investment:
       type: object
       properties:
