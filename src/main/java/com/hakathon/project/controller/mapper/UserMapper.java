@@ -12,6 +12,21 @@ import java.util.Base64;
 @Component
 @AllArgsConstructor
 public class UserMapper {
+    public com.hakathon.project.controller.model.User toRest(User user) {
+        return com.hakathon.project.controller.model.User.builder()
+            .id(user.getId())
+            .age(user.getAge())
+            .ageCategory(user.getAgeCategory())
+            .birthdate(user.getBirthdate())
+            .cin(user.getCin())
+            .firstname(user.getFirstname())
+            .lastname(user.getLastname())
+            .image(user.getImage())
+            .role(user.getRole())
+            .sex(user.getSex())
+            .build();
+    }
+
 
     public User toDomain(CrupdateUser user) {
         int age = (Period.between(user.getBirthdate(), LocalDate.now())).getYears();
