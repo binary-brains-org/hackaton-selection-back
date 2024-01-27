@@ -1,5 +1,6 @@
 package com.hakathon.project.controller.mapper;
 
+import com.hakathon.project.controller.model.CrupdateUser;
 import com.hakathon.project.model.User;
 import com.hakathon.project.model.enums.UserEnum;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.Base64;
 @AllArgsConstructor
 public class UserMapper {
 
-    public User toDomain(User user) {
+    public User toDomain(CrupdateUser user) {
         int age = (Period.between(user.getBirthdate(), LocalDate.now())).getYears();
         User newUser = new User();
         newUser.setFirstname(user.getFirstname());
