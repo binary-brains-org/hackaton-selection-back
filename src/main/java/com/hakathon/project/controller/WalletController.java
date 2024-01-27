@@ -11,12 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class WalletController {
     private final WalletService walletService;
 
-    @PostMapping("/storeMoney")
-    public Wallet storeMoney(@RequestBody Investment investment){
-        return new Wallet();
-    }
-
-    @PostMapping("/getWallet/{user_id}")
+    @GetMapping("/getWallet/{user_id}")
     public Wallet getWalletById(@PathVariable String user_id){
         return walletService.getWalletByUserId(user_id);
     }

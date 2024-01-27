@@ -10,7 +10,8 @@ $$;
 create table if not exists "investment"(
   id varchar primary key default uuid_generate_v4(),
   comment varchar,
-  status status,
+  status status default 'DENIED',
   price integer,
-  image text
+  image text,
+  user_id varchar references "user"(id)
 );

@@ -40,4 +40,9 @@ public class Wallet {
     this.withdrawLimit -= toWithdraw;
     return this.eMoney;
   }
+
+  public int deposit(int toDeposit) {
+    this.eMoney += toDeposit;
+    return this.eMoney;
+  }
 }

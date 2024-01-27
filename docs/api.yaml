@@ -346,16 +346,16 @@ components:
             - M
             - F
         image:
-            type: string
+          type: string
         cin:
-            type: string
-            default: null
+          type: string
+          default: null
         role:
           type: string
           enum:
             - CHILD
             - PARENT
-        age_category:
+        ageCategory:
           type: string
           enum:
             - KIDS
