@@ -15,6 +15,10 @@ public class WalletService {
   private final WalletRepository walletRepository;
   private final UserRepository userRepository;
 
+  public Wallet saveWallet(Wallet wallet){
+    return walletRepository.save(wallet);
+  }
+
   public Wallet createWallet(String userId,Integer eMoney,Integer limit){
     Wallet wallet = Wallet.builder()
             .user(getUserById(userId))
