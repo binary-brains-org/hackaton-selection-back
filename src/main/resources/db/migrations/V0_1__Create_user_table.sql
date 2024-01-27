@@ -7,7 +7,7 @@ $$
            create type "role" as enum ('CHILD', 'PARENT');
         end if;
         if not exists(select from pg_type where typname ='age_category') then
-           create type "age_category" as enum ('KID', 'TEEN', 'ADULT');
+           create type "age_category" as enum ('KIDS', 'TEEN', 'ADULT');
         end if;
         if not exists(select from pg_type where typname = 'sex') then
            create type sex as enum ('M', 'F');
@@ -20,11 +20,12 @@ create table if not exists "user" (
   firstname varchar,
   lastname varchar,
   birthdate date default null,
-  role role,
-  sex sex,
-  age_category age_category,
+  role varchar,
+  sex varchar,
+  age_category varchar,
   password varchar,
   age integer,
   image text,
+  cin varchar,
   user_id varchar references "user"(id)
 );
