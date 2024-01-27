@@ -4,6 +4,7 @@ import com.hakathon.project.controller.model.CrupdateUser;
 import com.hakathon.project.model.User;
 import com.hakathon.project.model.enums.UserEnum;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.Period;
@@ -12,6 +13,22 @@ import java.util.Base64;
 @Component
 @AllArgsConstructor
 public class UserMapper {
+    private final BCryptPasswordEncoder passwordEncoder;
+    public com.hakathon.project.controller.model.User toRest(User user) {
+        return com.hakathon.project.controller.model.User.builder()
+            .id(user.getId())
+            .age(user.getAge())
+            .ageCategory(user.getAgeCategory())
+            .birthdate(user.getBirthdate())
+            .cin(user.getCin())
+            .firstname(user.getFirstname())
+            .lastname(user.getLastname())
+            .image(user.getImage())
+            .role(user.getRole())
+            .sex(user.getSex())
+            .build();
+    }
+
 
     public User toDomain(CrupdateUser user) {
         int age = (Period.between(user.getBirthdate(), LocalDate.now())).getYears();
@@ -31,7 +48,7 @@ public class UserMapper {
         }
         newUser.setAge(age);
         newUser.setImage(null);
-        newUser.setPassword(user.getPassword());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         return newUser;
     }
 }
